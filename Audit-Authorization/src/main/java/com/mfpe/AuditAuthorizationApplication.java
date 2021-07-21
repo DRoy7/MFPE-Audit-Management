@@ -8,6 +8,7 @@ public class AuditAuthorizationApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuditAuthorizationApplication.class, args);
+		System.out.println("Audit-Authorization MS - Started");
 	}
 
 }

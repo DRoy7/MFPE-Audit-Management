@@ -23,8 +23,8 @@ public class MyUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("Asking for the user-deatils in the User object");
-		ProjectManagerDetails p = new ProjectManagerDetails(projectManagerService.getProjectManagerByUserName(username));
-		return p;
+		ProjectManagerDetails projectManagerDetails = new ProjectManagerDetails(projectManagerService.getProjectManagerByUserName(username));
+		return projectManagerDetails;
 	}
 	
 }

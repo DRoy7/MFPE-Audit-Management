@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuditChecklistController {
-	
-//	@GetMapping("/AuditCheckListQuestions")
-//	public 
+	 
 	
 	// This is to just do a health check of the microservice
 	@GetMapping("/health-check")

@@ -21,6 +21,9 @@ public class ProjectManagerDetailsService implements UserDetailsService{
 	// if match --> authenticated , if not match --> user not authenticated
 	@Override
 	public ProjectManagerDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// it gets the ProjectManager using ProjectManagerService and 
+		// from there it gets the ProjecManagerDetails from ProjectManager using ProjectManagerDetailsService...
+		// which is then used in SecurityConfig
 		ProjectManagerDetails projectManagerDetails = new ProjectManagerDetails(projectManagerService.getProjectManagerByUserName(username));
 		return projectManagerDetails;
 	}

@@ -9,14 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mfpe.service.MyUserDetailsService;
+import com.mfpe.service.ProjectManagerDetailsService;
 
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
-	private MyUserDetailsService myUserDetailsService;
+	private ProjectManagerDetailsService projectManagerDetailsService;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(projectManagerDetailsService).passwordEncoder(passwordEncoder());
 	}
 	
 	@Override

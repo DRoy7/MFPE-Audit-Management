@@ -28,11 +28,12 @@ public class ProjectManagerDetails implements UserDetails{
 		
 	}
 	
-	public ProjectManagerDetails(ProjectManager projectManager) {
-		this.id = projectManager.getId();
-		this.name = projectManager.getName();
-		this.username = projectManager.getUsername();
-		this.password = new BCryptPasswordEncoder(10).encode(projectManager.getPassword());
+	public ProjectManagerDetails(ProjectManager pm) {
+		System.out.println(pm);
+		this.id = pm.getId();
+		this.name = pm.getName();
+		this.username = pm.getUsername();
+		this.password = new BCryptPasswordEncoder().encode(pm.getPassword());
 	}
 	
 

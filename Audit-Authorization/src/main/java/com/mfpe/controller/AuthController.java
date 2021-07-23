@@ -1,8 +1,5 @@
 package com.mfpe.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mfpe.model.AuthenticationRequest;
@@ -34,6 +32,7 @@ public class AuthController {
 	@Autowired
 	private JwtService jwtService;
 	
+	private String username;
 	
 	@GetMapping("/health-check")
 	public ResponseEntity<String> healthCheck(){	// for Health check [PERMITTED FOR ALL]
@@ -47,7 +46,7 @@ public class AuthController {
 	
 	// authentication - for the very first login
 	@PostMapping("/authenticate")
-	public ResponseEntity<String> generateJwt(@RequestBody AuthenticationRequest request, HttpSession session){
+	public ResponseEntity<String> generateJwt(@RequestBody AuthenticationRequest request){
 		ResponseEntity<String> response = null;
 		
 		// authenticating the User-Credentials
@@ -59,8 +58,8 @@ public class AuthController {
 			
 			final String jwt = jwtService.generateToken(projectManagerDetails);	// returning the token as response
 			
-			//setting the session-attributes for username
-			session.setAttribute("user-name", projectManagerDetails.getUsername());
+			//setting the class-member for username
+			this.username = projectManagerDetails.getUsername();
 			
 			response = new ResponseEntity<String>(jwt, HttpStatus.OK);
 		}catch (Exception e) {
@@ -71,14 +70,17 @@ public class AuthController {
 	}
 	
 	// validate - for every request it validates the user-credentials from the provided Jwt token in Authorization req. header
-	@GetMapping("/validate")
-	public ResponseEntity<AuthenticationResponse> validateJwt(@RequestHeader("Authorization") String jwt, HttpSession session){
+	@RequestMapping(path = {"/validate"}, method= {RequestMethod.GET, RequestMethod.POST})
+	public ResponseEntity<AuthenticationResponse> validateJwt(@RequestHeader("Authorization") String jwt){
 		AuthenticationResponse authenticationResponse = new AuthenticationResponse("Invalid", "Invalid", false);
 		ResponseEntity<AuthenticationResponse> response = null;
 		
+		//test
+		System.out.println("--------\n"+jwt);
+		
 		// getting user-name from session
 		final ProjectManagerDetails projectManagerDetails = projectManagerDetailsService
-																.loadUserByUsername(session.getAttribute("user-name").toString());
+																.loadUserByUsername(this.username);
 		
 		// check the jwt is proper or not
 		
@@ -97,10 +99,10 @@ public class AuthController {
 				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
 			}
 		}catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.BAD_REQUEST);
 		}
-		
+		System.out.println("-------- Validated");
 		return response;
 	}
 	

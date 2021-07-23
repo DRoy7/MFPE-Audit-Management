@@ -3,6 +3,7 @@ package com.mfpe.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,19 +24,29 @@ public class ProjectManagerDetails implements UserDetails{
 	private String name;
 	private String username;
 	private String password;
+	private String projectName;
 	
 	public ProjectManagerDetails() {
 		
 	}
 	
 	public ProjectManagerDetails(ProjectManager projectManager) {
+		System.out.println(projectManager);
 		this.id = projectManager.getId();
 		this.name = projectManager.getName();
 		this.username = projectManager.getUsername();
 		this.password = new BCryptPasswordEncoder(10).encode(projectManager.getPassword());
+		this.projectName = projectManager.getProjectName();
 	}
 	
+	public String getName() {
+		return this.name;
+	}
 
+	public String getProjectName() {
+		return this.projectName;
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return new ArrayList<>();

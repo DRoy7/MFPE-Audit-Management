@@ -24,7 +24,8 @@ public class ProjectManagerDetailsService implements UserDetailsService{
 		// it gets the ProjectManager using ProjectManagerService and 
 		// from there it gets the ProjecManagerDetails from ProjectManager using ProjectManagerDetailsService...
 		// which is then used in SecurityConfig
-		ProjectManagerDetails projectManagerDetails = new ProjectManagerDetails(projectManagerService.getProjectManagerByUserName(username));
+		ProjectManagerDetails projectManagerDetails = new ProjectManagerDetails(projectManagerService
+																.getProjectManagerByUserName(username));
 		return projectManagerDetails;
 	}
 	

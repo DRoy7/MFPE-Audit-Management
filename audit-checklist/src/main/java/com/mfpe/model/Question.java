@@ -1,5 +1,6 @@
 package com.mfpe.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,12 +19,16 @@ public class Question {
 	
 	@Id
 	@GeneratedValue
+	@Column(name="question_id")
 	private int questionId;
 	
+	@Column(name="question")
 	private String question;
 	
+	@Column(name="audit_type")
 	private String auditType;
 	
-	private char response;
+	@Column(name="response")
+	private String response;
 	
 }

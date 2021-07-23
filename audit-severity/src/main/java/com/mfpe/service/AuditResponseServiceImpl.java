@@ -14,7 +14,7 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 	
 	public List<AuditResponse> getAuditResponses(List<AuditBenchmark> benchmarkList,List<Question> questionListInternal,List<Question> questionListSox) {
 		
-		List<AuditResponse> auditResponeList = new ArrayList<>(2);
+		List<AuditResponse> auditResponeList = new ArrayList<>();
 		/*
 		 * From the benchmark microservice list here we
 		 * count the number of no's for each audit type 
@@ -26,17 +26,21 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 			}else {
 				acceptableNoSox = ab.getBenchmarkNoAnswers();
 			}
-		}		
-		auditResponeList.set(0, createAuditResponse(acceptableNoInternal,questionListInternal));
-		auditResponeList.set(1, createAuditResponse(acceptableNoSox, questionListSox));
-					
+		}
+//		System.out.println(acceptableNoInternal);
+//		System.out.println(acceptableNoSox);
+		auditResponeList.add(createAuditResponse(acceptableNoInternal,questionListInternal));
+//		System.out.println(auditResponeList);
+		auditResponeList.add(createAuditResponse(acceptableNoSox, questionListSox));
+//		System.out.println(auditResponeList);
+		
 		return auditResponeList;
-			
 	}
+	
 	//This method is to check the audit responses with the audit type
 	private AuditResponse createAuditResponse(int acceptableNo,List<Question> questions) {
 		
-		String auditType = questions.get(0).getAuditType();	
+		String auditType = questions.get(0).getAuditType();
 		int actualNo = countNos(questions);
 		AuditResponse auditResponse = new AuditResponse();
 		/* Here we check actual condition of the severity microservice
@@ -52,7 +56,7 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 			auditResponse.setProjectExecutionStatus("RED");
 			auditResponse.setRemedialActionDuration("Action to be taken in 2 weeks");
 		}
-		else if(actualNo <= acceptableNo && auditType.equalsIgnoreCase("Sox")) {
+		else if(actualNo <= acceptableNo && auditType.equalsIgnoreCase("SOX")) {
 			auditResponse.setAuditId((int) Math.random());
 			auditResponse.setProjectExecutionStatus("GREEN");
 			auditResponse.setRemedialActionDuration("No action needed");
@@ -63,6 +67,7 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 			auditResponse.setRemedialActionDuration("Action to be taken in 1 week");
 		}
 		
+//		System.out.println(auditResponse);
 		
 		return auditResponse;
 	}

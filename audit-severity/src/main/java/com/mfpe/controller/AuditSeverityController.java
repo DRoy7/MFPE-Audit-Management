@@ -45,19 +45,19 @@ public class AuditSeverityController {
 	
 	//This is to check the severity of the audit and it returns the execution status of the project
 	@PostMapping("/ProjectExecutionStatus")
-	public ResponseEntity<?> auditSeverity(@RequestHeader String jwt){
+	public ResponseEntity<?> auditSeverity(@RequestHeader("Authorization") String jwt){
 		List<AuditResponse> auditResponseList = new ArrayList<>();
 		
 		// checking if the jwt is valid or not
-		if(jwt.length()>0 && authorizationService.validateJwt(jwt.substring(7))) {	
-			List<AuditBenchmark> benchmarkList = auditBenchmarkFeign.getAuditBenchmark();
+		if(jwt.length()>0 && authorizationService.validateJwt(jwt)) {	
+			List<AuditBenchmark> benchmarkList = auditBenchmarkFeign.getAuditBenchmark(jwt);
 			System.out.println(benchmarkList);
 			AuditType auditType = new AuditType();
 			auditType.setAuditType("Internal");
-			List<Question> questionListInternal = auditCheckListFeign.auditCheckListQuestions(auditType);
+			List<Question> questionListInternal = auditCheckListFeign.auditCheckListQuestions(jwt, auditType);
 			System.out.println(questionListInternal);
 			auditType.setAuditType("SOX");
-			List<Question> questionListSox = auditCheckListFeign.auditCheckListQuestions(auditType);
+			List<Question> questionListSox = auditCheckListFeign.auditCheckListQuestions(jwt, auditType);
 			System.out.println(questionListSox);
 			auditResponseList = auditResponseService.getAuditResponses(benchmarkList,questionListInternal,questionListSox);
 		}

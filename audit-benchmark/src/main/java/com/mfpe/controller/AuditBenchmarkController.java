@@ -30,7 +30,8 @@ public class AuditBenchmarkController {
 		List<AuditBenchmark> auditBenchmarks = new ArrayList<>();
 		
 		// checking if the jwt is valid or not
-		if(jwt.length()>0 && authorizationService.validateJwt(jwt.substring(7))) {			
+		System.out.println("JWT :: " + jwt);
+		if(jwt.length()>0 && authorizationService.validateJwt(jwt)) {			
 			auditBenchmarks = auditBenchmarkService.getAuditBenchmarkList();
 		}
 		return auditBenchmarks;

@@ -28,11 +28,11 @@ public class AuditChecklistController {
 	
 	// Endpoint for retrieving the questions from the DB 
 	@RequestMapping(value = "/AuditCheckListQuestions", method = {RequestMethod.GET, RequestMethod.POST} )
-	public List<Question> auditCheckListQuestions(@RequestHeader String jwt, @RequestBody AuditType auditType) {
+	public List<Question> auditCheckListQuestions(@RequestHeader("Authorization") String jwt, @RequestBody AuditType auditType) {
 		List<Question> questions = new ArrayList<Question>();
 		
 		// checking if the jwt is valid or not
-		if(jwt.length()>0 && authorizationService.validateJwt(jwt.substring(7))) {	
+		if(jwt.length()>0 && authorizationService.validateJwt(jwt)) {	
 			questions = questionService.getQuestionsByAuditType(auditType);
 		}
 		

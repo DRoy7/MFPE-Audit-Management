@@ -15,7 +15,6 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 	@Override
 	public boolean validateJwt(String jwt) {
 		AuthenticationResponse authenticationResponse = authClient.validate(jwt).getBody();
-		System.out.println(jwt + " , " + authenticationResponse);
 		return authenticationResponse.isValid();
 	}
 	

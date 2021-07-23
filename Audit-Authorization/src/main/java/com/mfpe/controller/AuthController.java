@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mfpe.model.AuthenticationRequest;
@@ -39,10 +38,10 @@ public class AuthController {
 		return new ResponseEntity<String>("Audit-Authorization MS Running Fine!!", HttpStatus.OK);
 	}
 	
-	@GetMapping(path = {"/home", "/"})
-	public ResponseEntity<String> home(){	// for Health check [Authenticated]
-		return new ResponseEntity<String>("Home!!", HttpStatus.OK);
-	}
+//	@GetMapping(path = {"/home", "/"})
+//	public ResponseEntity<String> home(){	// for Health check [Authenticated]
+//		return new ResponseEntity<String>("Home!!", HttpStatus.OK);
+//	}
 	
 	// authentication - for the very first login
 	@PostMapping("/authenticate")
@@ -61,6 +60,9 @@ public class AuthController {
 			//setting the class-member for username
 			this.username = projectManagerDetails.getUsername();
 			
+			//test
+			System.out.println("Auth :: " + projectManagerDetails);
+			
 			response = new ResponseEntity<String>(jwt, HttpStatus.OK);
 		}catch (Exception e) {
 			response = new ResponseEntity<String>("Not Authorized Project Manager", HttpStatus.FORBIDDEN);
@@ -70,13 +72,14 @@ public class AuthController {
 	}
 	
 	// validate - for every request it validates the user-credentials from the provided Jwt token in Authorization req. header
-	@RequestMapping(path = {"/validate"}, method= {RequestMethod.GET, RequestMethod.POST})
+	@PostMapping("/validate")
 	public ResponseEntity<AuthenticationResponse> validateJwt(@RequestHeader("Authorization") String jwt){
+		
 		AuthenticationResponse authenticationResponse = new AuthenticationResponse("Invalid", "Invalid", false);
 		ResponseEntity<AuthenticationResponse> response = null;
 		
-		//test
-		System.out.println("--------\n"+jwt);
+		//check token
+		System.out.println("--------\nJWT :: "+jwt);
 		
 		// getting user-name from session
 		final ProjectManagerDetails projectManagerDetails = projectManagerDetailsService
@@ -89,7 +92,7 @@ public class AuthController {
 		
 		// now validating the jwt
 		try {
-			if(jwtService.validateToken(jwt, projectManagerDetails)) {
+			if(jwtService.extractUsername(jwt).equals(this.username)) {
 				authenticationResponse.setName(projectManagerDetails.getName());
 				authenticationResponse.setProjectName(projectManagerDetails.getProjectName());
 				authenticationResponse.setValid(true);

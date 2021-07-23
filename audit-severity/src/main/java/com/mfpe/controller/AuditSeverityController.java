@@ -1,5 +1,6 @@
 package com.mfpe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mfpe.feign.AuditBenchmarkFeign;
 import com.mfpe.feign.AuditCheckListFeign;
@@ -16,6 +18,7 @@ import com.mfpe.model.AuditType;
 import com.mfpe.model.Question;
 import com.mfpe.service.AuditResponseService;
 
+@RestController
 public class AuditSeverityController {
 	
 	@Autowired
@@ -38,16 +41,20 @@ public class AuditSeverityController {
 	public ResponseEntity<?> auditSeverity(){
 		
 		List<AuditBenchmark> benchmarkList = auditBenchmarkFeign.getAuditBenchmark();
-		
+		System.out.println(benchmarkList);
 		AuditType auditType = new AuditType();
 		auditType.setAuditType("Internal");
 		List<Question> questionListInternal = auditCheckListFeign.auditCheckListQuestions(auditType);
-		auditType.setAuditType("Sox");
+		System.out.println(questionListInternal);
+		auditType.setAuditType("SOX");
 		List<Question> questionListSox = auditCheckListFeign.auditCheckListQuestions(auditType);
-		
+		System.out.println(questionListSox);
 		List<AuditResponse> auditResponseList = auditResponseService.getAuditResponses(benchmarkList,questionListInternal,questionListSox);
 		
+//		List<AuditResponse> auditResponseList = new ArrayList<>();
+		
+		
 		return new ResponseEntity<>(auditResponseList,HttpStatus.OK);
-				
+		
 	}
 }

@@ -37,7 +37,8 @@ public class JwtService {
     }
     
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRETKEY).parseClaimsJws(token).getBody();
+    	String formated_token = token.trim().replaceAll("\0xfffd", "");
+        return Jwts.parser().setSigningKey(SECRETKEY).parseClaimsJws(formated_token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {

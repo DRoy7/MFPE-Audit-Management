@@ -7,9 +7,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.mfpe.filter.JwtRequestFilter;
 import com.mfpe.service.ProjectManagerDetailsService;
 
 
@@ -18,6 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private ProjectManagerDetailsService projectManagerDetailsService;
+	
+	@Autowired
+	private JwtRequestFilter jwtRequestFilter;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -43,9 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/auth/health-check", "/auth/authenticate", "/auth/validate").permitAll()
-		.antMatchers("/auth/*").authenticated()
+		.antMatchers("/auth/health-check", "/auth/authenticate").permitAll()
+		.anyRequest().authenticated()
 		.and()
-		.formLogin();
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);	// stopping default session creation
+		
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);	// adding the filter
 	}
 }

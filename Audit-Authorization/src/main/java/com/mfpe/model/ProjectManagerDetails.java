@@ -31,7 +31,6 @@ public class ProjectManagerDetails implements UserDetails{
 	}
 	
 	public ProjectManagerDetails(ProjectManager projectManager) {
-		System.out.println(projectManager);
 		this.id = projectManager.getId();
 		this.name = projectManager.getName();
 		this.username = projectManager.getUsername();

@@ -1,6 +1,5 @@
 package com.mfpe.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class AuditBenchmarkController {
 	
 	// Endpoint to retrieve the Audit Benchmark details
 	@GetMapping("/AuditBenchmark")
-	public List<AuditBenchmark> getAuditBenchmarkFromRepo() {
+	public List<AuditBenchmark> getAuditBenchmark() {
 		return auditBenchmarkService.getAuditBenchmarkList();
 	}
 	

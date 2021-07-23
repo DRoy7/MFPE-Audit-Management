@@ -3,21 +3,23 @@ package com.mfpe.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mfpe.model.AuditBenchmark;
+import com.mfpe.service.AuditBenchmarkService;
 
 @RestController
 public class AuditBenchmarkController {
 	
+	@Autowired
+	AuditBenchmarkService auditBenchmarkService;
+	
 	// Endpoint to retrieve the Audit Benchmark details
 	@GetMapping("/AuditBenchmark")
-	public List<AuditBenchmark> getAuditBenchmark() {
-		List<AuditBenchmark> benchmarkList = new ArrayList<>();
-		benchmarkList.add(new AuditBenchmark("Internal",3));
-		benchmarkList.add(new AuditBenchmark("SOX",1));
-		return benchmarkList;
+	public List<AuditBenchmark> getAuditBenchmarkFromRepo() {
+		return auditBenchmarkService.getAuditBenchmarkList();
 	}
 	
 	// Endpoint to check if the microservice is live

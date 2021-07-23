@@ -20,7 +20,7 @@ public class AuditBenchmark {
 	@Id
 	@Column(name="benchmark_id")
 	@GeneratedValue
-	private int benchmark_id;
+	private int benchmarkId;
 	
 	@Column(name="audit_type")
 	private String auditType;

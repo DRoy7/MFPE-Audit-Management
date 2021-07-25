@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.mfpe.model.ProjectManager;
 import com.mfpe.model.ProjectManagerDetails;
 
 
@@ -24,8 +25,13 @@ public class ProjectManagerDetailsService implements UserDetailsService{
 		// it gets the ProjectManager using ProjectManagerService and 
 		// from there it gets the ProjecManagerDetails from ProjectManager using ProjectManagerDetailsService...
 		// which is then used in SecurityConfig
-		ProjectManagerDetails projectManagerDetails = new ProjectManagerDetails(projectManagerService
-																.getProjectManagerByUserName(username));
+		ProjectManagerDetails projectManagerDetails = null;
+		ProjectManager projectManager = projectManagerService.getProjectManagerByUserName(username);
+		if(projectManager!=null) {
+			projectManagerDetails = new ProjectManagerDetails(projectManagerService
+											.getProjectManagerByUserName(username));
+		}
+		
 		return projectManagerDetails;
 	}
 	

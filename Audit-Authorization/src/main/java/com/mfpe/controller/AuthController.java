@@ -31,17 +31,10 @@ public class AuthController {
 	@Autowired
 	private JwtService jwtService;
 	
-	private String username;
-	
 	@GetMapping("/health-check")
 	public ResponseEntity<String> healthCheck(){	// for Health check [PERMITTED FOR ALL]
 		return new ResponseEntity<String>("Audit-Authorization MS Running Fine!!", HttpStatus.OK);
 	}
-	
-//	@GetMapping(path = {"/home", "/"})
-//	public ResponseEntity<String> home(){	// for Health check [Authenticated]
-//		return new ResponseEntity<String>("Home!!", HttpStatus.OK);
-//	}
 	
 	// authentication - for the very first login
 	@PostMapping("/authenticate")
@@ -57,11 +50,8 @@ public class AuthController {
 			
 			final String jwt = jwtService.generateToken(projectManagerDetails);	// returning the token as response
 			
-			//setting the class-member for username
-			this.username = projectManagerDetails.getUsername();
-			
 			//test
-			System.out.println("Auth :: " + projectManagerDetails);
+			System.out.println("Authenticated User :: " + projectManagerDetails);
 			
 			response = new ResponseEntity<String>(jwt, HttpStatus.OK);
 		}catch (Exception e) {
@@ -77,22 +67,22 @@ public class AuthController {
 		
 		AuthenticationResponse authenticationResponse = new AuthenticationResponse("Invalid", "Invalid", false);
 		ResponseEntity<AuthenticationResponse> response = null;
+
+		//first remove Bearer from Header
+		jwt = jwt.substring(7);
 		
 		//check token
 		System.out.println("--------\nJWT :: "+jwt);
 		
-		// getting user-name from session
-		final ProjectManagerDetails projectManagerDetails = projectManagerDetailsService
-																.loadUserByUsername(this.username);
 		
 		// check the jwt is proper or not
-		
-		//first remove Bearer from Header
-		jwt = jwt.substring(7);
+		// getting user-name from session
+		final ProjectManagerDetails projectManagerDetails = projectManagerDetailsService
+															.loadUserByUsername(jwtService.extractUsername(jwt));
 		
 		// now validating the jwt
 		try {
-			if(jwtService.extractUsername(jwt).equals(this.username)) {
+			if(jwtService.validateToken(jwt, projectManagerDetails)) {
 				authenticationResponse.setName(projectManagerDetails.getName());
 				authenticationResponse.setProjectName(projectManagerDetails.getProjectName());
 				authenticationResponse.setValid(true);

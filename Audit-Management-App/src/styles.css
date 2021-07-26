@@ -1,2 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';    /* Bootstrap */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #b92b27, #1565c0)
+}
+header, footer {
+    position: absolute;
+    width : 100%;
+    height : 8vh;
+    color: aliceblue;
+    background-color: #191919;
+    border: 1px solid black;
+}
+footer{
+    position: fixed;
+    bottom: 0;
+}
+footer h5 {
+    margin-left: 87%;
+    margin-top: 20px;
+}
+img {
+    border-radius: 50%;
+    max-height: 5vh;
+    margin: 5px;
+    margin-top: 8px;
+}
+.headerTitle {
+    margin-left: 0%;
+    margin-top: 10px;
+}

@@ -19,8 +19,6 @@ import lombok.Setter;
 @Component
 public class AuditDetail {
 	
-	
-	private int auditDetailId;	
 	private String auditType;
 	private Date auditDate;
 	private List<AuditQuestion> auditQuestions;

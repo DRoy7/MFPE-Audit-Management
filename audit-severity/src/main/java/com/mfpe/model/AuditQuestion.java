@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Component
 @Data
-public class Question {
+public class AuditQuestion {
 	
 	private int questionId;
 	private String question;

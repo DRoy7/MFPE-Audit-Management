@@ -4,10 +4,15 @@ import java.util.List;
 
 import com.mfpe.model.AuditBenchmark;
 import com.mfpe.model.AuditResponse;
-import com.mfpe.model.Question;
+import com.mfpe.model.AuditQuestion;
+import com.mfpe.model.AuditRequest;
 
 public interface AuditResponseService {
 	
-	public List<AuditResponse> getAuditResponses(List<AuditBenchmark> benchmarkList,List<Question> questionListInternal,List<Question> questionListSox); 
+	//public List<AuditResponse> getAuditResponses(List<AuditBenchmark> benchmarkList,List<AuditQuestion> questionListInternal,List<AuditQuestion> questionListSox);
+
+	public AuditResponse getAuditResponse(List<AuditBenchmark> benchmarkList, String auditType,List<AuditQuestion> questionResponses);
+
+	public AuditResponse saveAuditResponse(AuditResponse auditResponse, AuditRequest auditRequest); 
 		
 }

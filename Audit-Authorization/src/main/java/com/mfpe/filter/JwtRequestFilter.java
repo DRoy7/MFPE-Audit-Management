@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,8 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 
 	@Autowired
 	private JwtService jwtService;
+	
+	Logger logger = LoggerFactory.getLogger("Jwt-Request-Filter");
 
 	// an added security layer to authorize all the requests if they have valid jwt or not
 	@Override
@@ -34,18 +38,19 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 		
 		final String jwtRequestHeader = request.getHeader("Authorization");
 		
-		System.out.println("Inside JwtRequestFilter : " + request.getRequestURI());
+		logger.info("Inside JwtRequestFilter : " + request.getRequestURI());
 		
 		String jwt = null, username = null;
 		if (jwtRequestHeader != null && jwtRequestHeader.startsWith("Bearer ")) {
 			jwt = jwtRequestHeader.substring(7);
 			try {
 				username = jwtService.extractUsername(jwt);
+				logger.info("Successfully obtained username : (" + username + ") from JWT");
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 			}
 		} else {
-			System.out.println("Problem with JWT token obtained from Request-Header.\nJWT--> "+jwt);
+			logger.error("Problem with JWT token obtained from Request-Header. JWT :: "+jwt);
 		}
 		
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -59,8 +64,16 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				logger.info("Successfully obtained and validated JWT :: "+jwt);
+			}
+			else {
+				logger.error("Validation failed for JWT :: "+jwt);
 			}
 		}
+		else {
+			logger.error("Problem with JWT token obtained from Request-Header. JWT :: "+jwt);
+		}
+		logger.info("-------- Exiting JwtRequestFilter");
 		filterChain.doFilter(request, response);
 	}
 }

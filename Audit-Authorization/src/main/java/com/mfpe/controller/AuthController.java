@@ -1,5 +1,7 @@
 package com.mfpe.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,8 @@ public class AuthController {
 	@Autowired
 	private JwtService jwtService;
 	
+	Logger logger = LoggerFactory.getLogger("Auth-Controller-Logger");
+	
 	@GetMapping("/health-check")
 	public ResponseEntity<String> healthCheck(){	// for Health check [PERMITTED FOR ALL]
 		return new ResponseEntity<String>("Audit-Authorization MS Running Fine!!", HttpStatus.OK);
@@ -51,13 +55,17 @@ public class AuthController {
 			final String jwt = jwtService.generateToken(projectManagerDetails);	// returning the token as response
 			
 			//test
-			System.out.println("Authenticated User :: " + projectManagerDetails);
+			logger.info("Authenticated User :: " + projectManagerDetails);
 			
 			response = new ResponseEntity<String>(jwt, HttpStatus.OK);
+			
+			logger.info("Successfully Authenticated user!");
+			
 		}catch (Exception e) {
+			logger.error("Given Project-Manager-Details does not exist in our Database!! info : " + request);
 			response = new ResponseEntity<String>("Not Authorized Project Manager", HttpStatus.FORBIDDEN);
 		}
-
+		logger.info("-------- Exiting /authenticate");
 		return response;
 	}
 	
@@ -72,7 +80,7 @@ public class AuthController {
 		jwt = jwt.substring(7);
 		
 		//check token
-		System.out.println("--------\nJWT :: "+jwt);
+		logger.info("--------JWT :: "+jwt);
 		
 		
 		// check the jwt is proper or not
@@ -87,15 +95,18 @@ public class AuthController {
 				authenticationResponse.setProjectName(projectManagerDetails.getProjectName());
 				authenticationResponse.setValid(true);
 				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.OK);
+				logger.info("Successfully validated the jwt and sending response back!");
 			}
 			else {
 				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
+				logger.error("JWT Token validation failed!");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
+			logger.error("Exception occured whil validating JWT : Exception info : " + e.getMessage());
 		}
-		System.out.println("-------- Validated");
+		logger.info("-------- Exiting /validate");
 		return response;
 	}
 	

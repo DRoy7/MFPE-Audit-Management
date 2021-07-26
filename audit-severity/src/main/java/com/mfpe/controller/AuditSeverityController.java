@@ -1,6 +1,8 @@
 package com.mfpe.controller;
 
-import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,9 @@ public class AuditSeverityController {
 	
 	@Autowired
 	private AuthorizationService authorizationService;
-	
+
+	Logger logger = LoggerFactory.getLogger("Severity-Controller-Logger");
+
 	//This is to check the microservice is working or not 
 	@GetMapping("/health-check")
 	public ResponseEntity<String> healthCheck() {
@@ -49,36 +53,41 @@ public class AuditSeverityController {
 	@PostMapping("/ProjectExecutionStatus")
 	public ResponseEntity<?> auditSeverity(@RequestHeader("Authorization") String jwt,
 				@RequestBody AuditRequest auditRequest){
-		//List<AuditResponse> auditResponseList = new ArrayList<>();
+
 		AuditResponse auditResponse = new AuditResponse();
 		
+		ResponseEntity<AuditResponse> response= null;
+		
 		// checking if the jwt is valid or not
-		if(jwt.length()>0 && authorizationService.validateJwt(jwt)) {	
-//			List<AuditBenchmark> benchmarkList = auditBenchmarkFeign.getAuditBenchmark(jwt);
-//			System.out.println(benchmarkList);
-//			AuditType auditType = new AuditType();
-//			auditType.setAuditType("Internal");
-//			List<AuditQuestion> questionListInternal = auditCheckListFeign.auditCheckListQuestions(jwt, auditType);
-//			System.out.println(questionListInternal);
-//			auditType.setAuditType("SOX");
-//			List<AuditQuestion> questionListSox = auditCheckListFeign.auditCheckListQuestions(jwt, auditType);
-//			System.out.println(questionListSox);
-//			auditResponseList = auditResponseService.getAuditResponses(benchmarkList,questionListInternal,questionListSox);
+		// creating auditResponse according to auditRequest
+		if(jwt.length()>0 && authorizationService.validateJwt(jwt)) {				
+			logger.info("Successfully validated the JWT :: " + jwt);
 			
-			//setting managername and projectname
-			
-			//creating auditResponse according to auditRequest
+			// getting benchmark list from Benchmark-MS
 			List<AuditBenchmark> benchmarkList = auditBenchmarkFeign.getAuditBenchmark(jwt);
+			
 			AuditType auditType = new AuditType();
-			auditType.setAuditType(auditRequest.getAuditDetail().getAuditType());
+			
+			auditType.setAuditType(auditRequest.getAuditDetail().getAuditType());	// setting auditType
+			
+			// getting responses back from Checklist-MS
 			List<AuditQuestion> questionResponses = auditCheckListFeign.auditCheckListQuestions(jwt, auditType);
+			
+			// create Audit-response
 			auditResponse = auditResponseService.getAuditResponse(benchmarkList,auditType.getAuditType(), questionResponses);
-//			auditResponse.setManagerName(auditRequest.getManagerName());
-//			auditResponse.setProjectName(auditRequest.getProjectName());
-			auditResponse = auditResponseService.saveAuditResponse(auditResponse,auditRequest);
-		}
 
-		return new ResponseEntity<>(auditResponse,HttpStatus.OK);
+			// saving response in DB
+			auditResponse = auditResponseService.saveAuditResponse(auditResponse,auditRequest);
+			
+			logger.info("AuditResponse successfully created!!");
+			
+			response = new ResponseEntity<AuditResponse>(auditResponse, HttpStatus.OK);
+		}
+		else {
+			logger.error("Failed to validate the JWT :: " + jwt);
+			response = new ResponseEntity<>(auditResponse,HttpStatus.FORBIDDEN);
+		}
+		return response;
 		
 	}
 }

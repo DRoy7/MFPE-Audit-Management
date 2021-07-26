@@ -14,7 +14,8 @@ public class ProjectManagerService {
 	private ProjectManagerRepo projectManagerRepo;
 	
 	public ProjectManager getProjectManagerByUserName(String username) throws ProjectManagerNotFoundException{
-		ProjectManager projectManager = projectManagerRepo.getProjectManagerByUserName(username);
+		ProjectManager projectManager = null;
+		projectManager = projectManagerRepo.getProjectManagerByUserName(username);
 		if(projectManager==null) {
 			throw new ProjectManagerNotFoundException("Given Project-Manager-Details does not exist in our Database!!");
 		}

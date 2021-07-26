@@ -24,5 +24,7 @@ public class ProjectManager{
 	private String username;
 	
 	private String password;
+
+	private String projectName;
 	
 }

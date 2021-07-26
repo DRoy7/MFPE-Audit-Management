@@ -7,9 +7,10 @@ import lombok.Data;
 @Component
 @Data
 public class AuditRequest {
+	
 	private String projectName;
 	private String managerName;
-	private String ownerName;
+	//private String ownerName;
 	private AuditDetail auditDetail;
 	
 }

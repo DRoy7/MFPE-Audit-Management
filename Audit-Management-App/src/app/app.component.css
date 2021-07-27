@@ -24,3 +24,28 @@ img {
     margin-left: 0%;
     margin-top: 10px;
 }
+
+.userIn {
+    background-color: #fff;
+    border: 2px solid black;
+    color: black;
+    position: absolute;
+    margin-top: 12px;
+    width: 150px;
+    right:5vh;
+    border-radius: 10px;
+    padding: 4px;
+    text-align: center;
+}
+
+h6{
+    margin: 0%;
+}
+
+.username-pic{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 4px;
+    right:26vh;
+}

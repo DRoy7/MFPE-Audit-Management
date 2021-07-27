@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.mfpe.exception.ProjectManagerNotFoundException;
 import com.mfpe.model.ProjectManagerDetails;
 import com.mfpe.service.JwtService;
 import com.mfpe.service.ProjectManagerDetailsService;
@@ -34,7 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 	// an added security layer to authorize all the requests if they have valid jwt or not
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ProjectManagerNotFoundException {
 		
 		final String jwtRequestHeader = request.getHeader("Authorization");
 		

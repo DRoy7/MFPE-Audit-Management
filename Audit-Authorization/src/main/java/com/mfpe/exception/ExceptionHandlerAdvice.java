@@ -12,7 +12,7 @@ import com.mfpe.model.AuthenticationResponse;
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 	
-	Logger logger = LoggerFactory.getLogger("Exception-Handler-Advice");
+	Logger logger = LoggerFactory.getLogger("Auth-Exception-Handler-Advice");
 	
 	// here it handles if any exception occurs during validation...
 	// we we send a Invalid response to the Angular app if exception occurs

@@ -1,4 +1,5 @@
-export const Microservices : Array<String> = [
-    "localhost:8100/auth",
-    "localhost:8150/benchmark"
-]
+export const Microservices : {[key: string]: string} = {
+    "auth" : "localhost:8100/auth",
+    "benchmark" : "localhost:8150/benchmark"
+    //...populate
+}

@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
 
   constructor() { }
 
-  public mcr : Object = Microservices[0];
+  // public mcr : String = Microservices["auth"];
 
   ngOnInit(): void {
   }

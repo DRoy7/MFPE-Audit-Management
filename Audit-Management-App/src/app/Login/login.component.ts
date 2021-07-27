@@ -1,3 +1,4 @@
+import { Microservices } from './../Models/Microservices';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   constructor() { }
+
+  // public mcr : String = Microservices["auth"];
 
   ngOnInit(): void {
   }

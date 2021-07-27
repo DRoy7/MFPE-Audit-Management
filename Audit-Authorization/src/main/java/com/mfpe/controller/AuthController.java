@@ -62,7 +62,7 @@ public class AuthController {
 			logger.info("Successfully Authenticated user!");
 			
 		}catch (Exception e) {
-			logger.error("Given Project-Manager-Details does not exist in our Database!! info : " + request);
+			logger.error(e.getMessage() + "!! info about request-body : " + request);
 			response = new ResponseEntity<String>("Not Authorized Project Manager", HttpStatus.FORBIDDEN);
 		}
 		logger.info("-------- Exiting /authenticate");
@@ -98,12 +98,12 @@ public class AuthController {
 				logger.info("Successfully validated the jwt and sending response back!");
 			}
 			else {
-				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
+				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.OK);
 				logger.error("JWT Token validation failed!");
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
-			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
+			logger.error(e.getMessage());
+			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.OK);
 			logger.error("Exception occured whil validating JWT : Exception info : " + e.getMessage());
 		}
 		logger.info("-------- Exiting /validate");

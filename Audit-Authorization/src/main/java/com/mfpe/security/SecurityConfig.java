@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/auth/health-check", "/auth/authenticate").permitAll()
+		.antMatchers("/auth/health-check", "/auth/authenticate", "/auth/validate").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);	// stopping default session creation

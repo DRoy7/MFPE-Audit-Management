@@ -1,8 +1,9 @@
 package com.mfpe.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,30 +18,8 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 	
 	@Autowired
 	private AuditResponseRepo auditResponseRepo;
-//	public List<AuditResponse> getAuditResponses(List<AuditBenchmark> benchmarkList,List<AuditQuestion> questionListInternal,List<AuditQuestion> questionListSox) {
-//		
-//		List<AuditResponse> auditResponeList = new ArrayList<>();
-//		/*
-//		 * From the benchmark microservice list here we
-//		 * count the number of no's for each audit type 
-//		 */
-//		int acceptableNoInternal = 0 ,acceptableNoSox = 0;
-//		for(AuditBenchmark ab : benchmarkList) {
-//			if(ab.getAuditType().equalsIgnoreCase("Internal")) {
-//				acceptableNoInternal = ab.getBenchmarkNoAnswers();
-//			}else {
-//				acceptableNoSox = ab.getBenchmarkNoAnswers();
-//			}
-//		}
-////		System.out.println(acceptableNoInternal);
-////		System.out.println(acceptableNoSox);
-//		auditResponeList.add(createAuditResponse(acceptableNoInternal,questionListInternal));
-////		System.out.println(auditResponeList);
-//		auditResponeList.add(createAuditResponse(acceptableNoSox, questionListSox));
-////		System.out.println(auditResponeList);
-//		
-//		return auditResponeList;
-//	}
+	
+	Logger logger = LoggerFactory.getLogger("Severity-Response-Calculation");
 	
 	//This method is to check the audit responses with the audit type
 	private AuditResponse createAuditResponse(int acceptableNo,List<AuditQuestion> questions) {
@@ -48,6 +27,9 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 		String auditType = questions.get(0).getAuditType();
 		int actualNo = countNos(questions);
 		AuditResponse auditResponse = new AuditResponse();
+		
+		logger.info(String.format("Audit-type : %s, Actual-Nos : %d, Acceptable Nos : %d", auditType, actualNo, acceptableNo));
+		
 		/* Here we check actual condition of the severity microservice
 		*  Determines the project execution status and the remediation duration detail
 		*/
@@ -71,8 +53,6 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 			auditResponse.setProjectExecutionStatus("RED");
 			auditResponse.setRemedialActionDuration("Action to be taken in 1 week");
 		}
-		
-//		System.out.println(auditResponse);
 		
 		return auditResponse;
 	}
@@ -111,6 +91,9 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 		// setting project name and manager name
 		auditResponse.setProjectName(auditRequest.getProjectName());
 		auditResponse.setManagerName(auditRequest.getManagerName());
+		
+		logger.info("Saving Audit-Response in DB :: " + auditResponse);
+		
 		return auditResponseRepo.save(auditResponse);
 	}	
 	

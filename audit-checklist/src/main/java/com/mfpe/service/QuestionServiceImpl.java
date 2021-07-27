@@ -17,9 +17,7 @@ public class QuestionServiceImpl implements QuestionService{
 	
 	// Service for the Endpoint /AuditCheckListQuestions
 	public List<Question> getQuestionsByAuditType(AuditType auditType){
-		//System.out.println("AuditType:"+auditType);
 		List<Question> qlist = questionRepo.getQuestionsByAuditType(auditType.getAuditType());
-		//System.out.println(qlist);
 		return qlist;
 	}
 

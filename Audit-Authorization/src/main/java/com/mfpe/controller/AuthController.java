@@ -62,7 +62,7 @@ public class AuthController {
 			logger.info("Successfully Authenticated user!");
 			
 		}catch (Exception e) {
-			logger.error("Given Project-Manager-Details does not exist in our Database!! info : " + request);
+			logger.error(e.getMessage() + "!! info about request-body : " + request);
 			response = new ResponseEntity<String>("Not Authorized Project Manager", HttpStatus.FORBIDDEN);
 		}
 		logger.info("-------- Exiting /authenticate");

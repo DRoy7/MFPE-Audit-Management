@@ -102,7 +102,7 @@ public class AuthController {
 				logger.error("JWT Token validation failed!");
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
 			logger.error("Exception occured whil validating JWT : Exception info : " + e.getMessage());
 		}

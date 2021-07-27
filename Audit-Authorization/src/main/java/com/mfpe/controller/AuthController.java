@@ -98,12 +98,12 @@ public class AuthController {
 				logger.info("Successfully validated the jwt and sending response back!");
 			}
 			else {
-				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
+				response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.OK);
 				logger.error("JWT Token validation failed!");
 			}
 		}catch (Exception e) {
 			logger.error(e.getMessage());
-			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.FORBIDDEN);
+			response = new ResponseEntity<AuthenticationResponse>(authenticationResponse, HttpStatus.OK);
 			logger.error("Exception occured whil validating JWT : Exception info : " + e.getMessage());
 		}
 		logger.info("-------- Exiting /validate");

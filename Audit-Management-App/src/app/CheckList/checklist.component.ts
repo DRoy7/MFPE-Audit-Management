@@ -1,7 +1,6 @@
 import { SecurityService } from './../Services/security.service';
 import { Component, OnInit } from '@angular/core';
 import { ChecklistService } from '../Services/checklist.service';
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { Question } from './question';
 import { Router } from '@angular/router';
 
@@ -50,6 +49,7 @@ export class ChecklistComponent implements OnInit {
     console.log("inside checklist getResponse");
     if(this.checklistService.validated(this.questions)){
       this.checklistService.getResponse(this.questions);
+      this.securityService.turnOffSpecialFlag();
       this.router.navigate(['severity']);
     }else{
       console.log("Not Answered");
@@ -58,12 +58,6 @@ export class ChecklistComponent implements OnInit {
 
   ngOnInit(): void {
     //login comes
-    if(this.securityService.getLoginStatus()){
-      this.getQuestions();
-      this.connectionCheck();
-    }
-    else{
-      this.router.navigate(['backToLogin']);
-    }
+    this.securityService.checkAuthFromLocal('checklist', 'backToLogin');
   }
 }

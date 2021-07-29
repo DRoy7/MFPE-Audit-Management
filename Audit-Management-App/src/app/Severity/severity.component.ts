@@ -25,19 +25,11 @@ export class SeverityComponent implements OnInit {
     private securityService : SecurityService
     ) {  }
   
-  ngOnInit(): void { 
-    if(this.securityService.getLoginStatus()){
-      this.getExecutionStatus();
-    }
-    else{
-      this.router.navigate(["backToLogin"]);
-    }
-  }
-
-  getExecutionStatus() : void {
-    let fetch : AuditResponse; 
+    
+    getExecutionStatus() : void {
+      let fetch : AuditResponse; 
     this.service.executionStatus()
-      .subscribe(
+    .subscribe(
         data => {
           fetch = data;
           console.log("Data: "+data);
@@ -49,11 +41,21 @@ export class SeverityComponent implements OnInit {
           this.status = this.auditResponse.projectExecutionStatus;
           console.log(this.auditResponse.projectExecutionStatus);
         }
-      );
+        );
+      }
+
+  ngOnInit(): void { 
+    if(this.securityService.getLoginStatus() && !this.securityService.getSpecialFlag()){
+      this.getExecutionStatus();
+    }
+    else if(this.securityService.getLoginStatus() || !this.securityService.getSpecialFlag()){
+      this.securityService.turnOnSpecialFlag();
+      this.router.navigate(["checklist"]);
+    }
+    else{
+      this.router.navigate(['backToLogin']);
+    }
   }
-  
+
 }
-
-
-
 

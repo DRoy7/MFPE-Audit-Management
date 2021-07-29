@@ -9,7 +9,7 @@ const routes: Routes = [
   {path : "", component : LoginComponent},  // login in beginning
   {path:"severity",component:SeverityComponent},
   {path : "login", component : LoginComponent},  // login
-  {path : "checklists", component : ChecklistComponent},  // checklists
+  {path : "checklist", component : ChecklistComponent},  // checklists
   {path : "backToLogin", component : BackToLoginComponent}, // if unauthorized access happens
   {path : "**", component : LoginComponent} // if nothing matches
 

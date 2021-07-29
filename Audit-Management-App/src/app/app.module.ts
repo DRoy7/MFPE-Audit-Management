@@ -1,3 +1,5 @@
+import { User } from './Services/User';
+import { SpecialFLag } from './Models/SpecialFlag';
 import { AuthorizationMSClientService } from './HttpClients/authorization-msclient.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -45,6 +47,8 @@ import { TokenInterceptorService } from './Services/token-interceptor.service';
     SecurityToken,
     LoginStatus,
     ProjectDetails,
+    SpecialFLag,
+    User,
     AuthorizationMSClientService,
     {   // for token interceptor
       provide : HTTP_INTERCEPTORS,

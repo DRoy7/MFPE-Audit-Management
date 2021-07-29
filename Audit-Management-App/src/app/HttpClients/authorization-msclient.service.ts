@@ -21,10 +21,10 @@ export class AuthorizationMSClientService {
                         });
   }
 
-  validate(securityToken : SecurityToken){
+  validate(securityToken : string){
     return this.authClient.post<ProjectDetailsInterface>(Microservices["auth"]+"/validate", 
       {
-        headers: new HttpHeaders().set("Authorization", "Bearer "+securityToken.Jwt)
+        headers: new HttpHeaders().set("Authorization", "Bearer "+securityToken)
       });
   }
 }

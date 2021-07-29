@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
           if(data.includes(".")){
             this.message = "";
             this.securityService.setLoginStatus(true);
+            this.securityService.turnOnSpecialFlag();
             this.securityService.setSecurityToken(data);
           }
       },
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
       () => {
         // routes based on authenticationStatus
           if(this.securityService.getLoginStatus()){
-            this.securityService.validateToken().subscribe(
+            this.securityService.validateToken(this.securityService.getSecurityToken()).subscribe(
               (data) => {
                 //checks
                 this.projectDetails.Name = data.name;
@@ -48,7 +49,10 @@ export class LoginComponent implements OnInit {
               },
               err =>{},
               ()=>{
-                this.router.navigate(['checklists']);            
+                // sets the localstorage
+                localStorage.setItem("auditToken", this.securityService.getSecurityToken());
+                // routes to checklist
+                this.router.navigate(['checklist']);            
               }
             );
           }
@@ -59,8 +63,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = "";
-    //when you get the jwtToken in LocalStorage
-    this.securityService.resetAll();
+    //init jtwtoken in not localstorage
+    this.securityService.checkAuthFromLocal('login', 'login');
   }
 
 }

@@ -1,11 +1,13 @@
-import { BackToLoginComponent } from './back-to-login/back-to-login.component';
-import { ChecklistComponent } from './CheckList/checklist.component';
-import { LoginComponent } from './Login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChecklistComponent } from './CheckList/checklist.component';
+import { SeverityComponent } from './Severity/severity.component';
+import { BackToLoginComponent } from './back-to-login/back-to-login.component';
+import { LoginComponent } from './Login/login.component';
 
 const routes: Routes = [
   {path : "", component : LoginComponent},  // login in beginning
+  {path:"severity",component:SeverityComponent},
   {path : "login", component : LoginComponent},  // login
   {path : "checklists", component : ChecklistComponent},  // checklists
   {path : "backToLogin", component : BackToLoginComponent}, // if unauthorized access happens

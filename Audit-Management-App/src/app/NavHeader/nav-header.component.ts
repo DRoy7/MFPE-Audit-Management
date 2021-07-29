@@ -15,9 +15,11 @@ export class NavHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let nameArray : Array<string> = this.securityService.getProjectDetails().Name.split(" ");
-    this.username = nameArray[0] + " " + nameArray[1][0] + ".";
-    this.logStatus = this.securityService.getLoginStatus();
+    if(this.securityService.getLoginStatus()){
+      let nameArray : Array<string> = this.securityService.getProjectDetails().Name.split(" ");
+      this.username = nameArray[0] + " " + nameArray[1][0] + ".";
+      this.logStatus = this.securityService.getLoginStatus();
+    }
   }
 
 }

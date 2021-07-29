@@ -1,5 +1,5 @@
-import { LoginStatus } from './../Models/LoginStatus';
 import { AuthorizationMSClientService } from '../HttpClients/authorization-msclient.service';
+import { LoginStatus } from './../Models/LoginStatus';
 import { AuthenticationRequest } from './../Models/AuthenticationRequest';
 import { ProjectDetails } from './../Models/ProjectDetails';
 import { SecurityToken } from './../Models/SecurityToken';

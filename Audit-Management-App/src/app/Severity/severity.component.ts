@@ -1,4 +1,8 @@
+import { Router } from '@angular/router';
+import { SecurityService } from './../Services/security.service';
 import { Component, OnInit } from '@angular/core';
+import { SeverityService } from '../Services/severity.service';
+import { AuditResponse } from '../Models/AuditResponse';
 
 @Component({
   selector: 'app-severity',
@@ -6,10 +10,50 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./severity.component.css']
 })
 export class SeverityComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  status:string="black";
+  auditResponse:AuditResponse = {
+    auditId: 0,
+    managerName: "",
+    projectExecutionStatus: "",
+    projectName: "",
+    remedialActionDuration: ""
+  };
+  
+  constructor(
+    private service:SeverityService,
+    private router : Router,
+    private securityService : SecurityService
+    ) {  }
+  
+  ngOnInit(): void { 
+    if(this.securityService.getLoginStatus()){
+      this.getExecutionStatus();
+    }
+    else{
+      this.router.navigate(["backToLogin"]);
+    }
   }
 
+  getExecutionStatus() : void {
+    let fetch : AuditResponse; 
+    this.service.executionStatus()
+      .subscribe(
+        data => {
+          fetch = data;
+          console.log("Data: "+data);
+          console.log("Fetch: "+fetch);
+        }, 
+        (err)=>{console.log("Error in Getting execution status")}, 
+        ()=>{
+          this.auditResponse = fetch;
+          this.status = this.auditResponse.projectExecutionStatus;
+          console.log(this.auditResponse.projectExecutionStatus);
+        }
+      );
+  }
+  
 }
+
+
+
+

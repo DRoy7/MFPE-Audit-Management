@@ -6,9 +6,9 @@
 
 .status-btn{
     background-color: #ff0000;
-    width: 25px;
+    width: 100px;
     height: 25px;
-    border-radius: 100%;
+    border-radius: 0%;
 }
 
 .dark-table{

@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { SecurityService } from './../Services/security.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChecklistComponent implements OnInit {
 
-  constructor() { }
+  public message = "";
+
+  constructor(
+    private securityService : SecurityService,
+    private router : Router
+  ) { }
 
   ngOnInit(): void {
+    if(this.securityService.getLoginStatus()){
+      // do nothing
+    }
+    else{
+      // route to backToLogin
+      this.router.navigate(['backToLogin']);
+    }
   }
 
 }

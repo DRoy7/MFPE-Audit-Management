@@ -1,0 +1,21 @@
+.result-card{
+    top:150px;
+    background-color: black;
+    color:white;
+}
+
+.status-btn{
+    background-color: #ff0000;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+}
+
+.dark-table{
+    background-color: black;
+}
+
+td, th{
+    text-align: center;
+    background-color: black;
+}

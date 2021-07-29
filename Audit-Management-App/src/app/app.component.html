@@ -1,17 +1,6 @@
-<!-- Header -->
-<header>
-<div class="nav text-allign-center">
-    <img src="assets/icon/appLogo.jpg" alt="LOGO"  height="90%">
-    <h3 class="headerTitle">Audit Management App</h3>
-    <img class="username-pic" *ngIf="logStatus" src="assets/icon/username_pic.png" alt="LOGO"  height="90%">
-    <div class="userIn" *ngIf="logStatus">
-        <h6>{{ username | titlecase}}</h6>
-    </div>
-</div>
-</header>
-<!-- Login Component-->
+<!-- Components-->
 <div class="container">
-    <app-login></app-login>
+    <router-outlet></router-outlet>
 </div>
 <!-- Footer -->
 <footer>

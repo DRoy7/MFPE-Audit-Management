@@ -1,23 +1,23 @@
 export class AuthenticationRequest{
-
+    private username : string = "";
+    private password : string = "";
+    
     constructor(
-        private _username : string,
-        private _password : string
     ){}
 
-    public get username() : string{
-        return this._username;
+    public get Username() : string{
+        return this.username;
     }
 
-    public set username(username : string) {
-        this._username = username;
+    public set Username(username : string) {
+        this.username = username;
     }
     
-    public get password() : string{
-        return this._password;
+    public get Password() : string{
+        return this.password;
     }
     
-    public set password(password : string){
-        this._password = password;
+    public set Password(password : string){
+        this.password = password;
     }
 }

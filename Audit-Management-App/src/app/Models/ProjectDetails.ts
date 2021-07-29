@@ -1,19 +1,31 @@
 export class ProjectDetails{
+    private name : string = "";
+    private projectName : string = "";
+    private valid : boolean = false;
     constructor(
-        private _name : string,
-        private _projectName : string,
-        private _valid : boolean
+        
     ){}
 
-    public get name() : string{
-        return this._name;
+    public get Name() : string{
+        return this.name;
     }
 
-    public get projectName() : string{
-        return this._projectName;
+    public get ProjectName() : string{
+        return this.projectName;
     }
 
-    public get valid() : boolean{
-        return this._valid;
+    public get Valid() : boolean{
+        return this.valid;
+    }
+    public set Name(name){
+        this.name = name;
+    }
+
+    public set ProjectName(pname){
+        this.projectName = pname;
+    }
+
+    public set Valid(valid){
+        this.valid = valid;
     }
 }

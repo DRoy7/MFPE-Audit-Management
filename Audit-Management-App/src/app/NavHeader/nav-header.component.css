@@ -52,3 +52,9 @@ h6{
     height: 30px;
     top: 12px;
 }
+
+.gotopages{
+    position: absolute;
+    top: 5px;
+    right:52vh;
+}

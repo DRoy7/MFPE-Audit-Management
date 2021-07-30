@@ -3,6 +3,7 @@
     <div class="nav text-allign-center">
         <img src="assets/icon/appLogo.jpg" alt="LOGO"  height="90%">
         <h3 class="headerTitle">Audit Management App</h3>
+        <!-- user-info -->
         <img class="username-pic" *ngIf="user.logStatus" src="assets/icon/username_pic_2.png" alt="LOGO"  height="90%">
         <div class="userInfo" *ngIf="user.logStatus">
             <h6>{{ user.username | titlecase }}</h6>
@@ -10,5 +11,4 @@
         <!-- logout -->
         <input class="logout-pic" *ngIf="user.logStatus" type="image" src="assets/icon/logout_pic.png" title="Logout" alt="Logout" width="48" height="48" (click)="logout()">
     </div>
-    
 </header>

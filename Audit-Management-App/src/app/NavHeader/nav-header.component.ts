@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-nav-header',
   templateUrl: './nav-header.component.html',
-  styleUrls: ['./nav-header.component.css']
+  styleUrls: ['./nav-header.component.css'],
 })
 export class NavHeaderComponent implements OnInit {
   // @Input()  public username : string = "";  // shows the username in header (keep max-string-length = 10)

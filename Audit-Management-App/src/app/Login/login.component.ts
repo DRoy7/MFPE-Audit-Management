@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
                 this.projectDetails.Valid = data.valid;
               },
               err =>{
-                
+
               },
               ()=>{
                 // sets the localstorage

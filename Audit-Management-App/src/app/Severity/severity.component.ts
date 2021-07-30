@@ -32,7 +32,8 @@ export class SeverityComponent implements OnInit {
     .subscribe(
         data => {
             fetch = data;
-            if(data.auditId==0){
+            console.log(data);
+            if(data.auditId==0){  //valid check
               this.router.navigate(['backToLogin']);
             }
         }, 

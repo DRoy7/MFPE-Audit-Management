@@ -1,3 +1,4 @@
+import { Microservices } from './../Models/Microservices';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -9,7 +10,7 @@ import { Question } from './question';
 })
 export class ChecklistService {
 
-  readonly APIUrl="http://localhost:8200/checklist";
+  readonly APIUrl=Microservices["checklist"];
 
   responses:Question[] = [];
   

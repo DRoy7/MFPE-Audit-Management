@@ -41,7 +41,7 @@ export class SecurityService {
   }
 
   ifStillValid() : Observable<ProjectDetailsInterface> {  // checks if the token from localstorage is valid or not
-    let ltoken : string = localStorage.getItem("auditToken") || "";
+    let ltoken : string = localStorage.getItem("auditToken") || this.token.Jwt;
     this.token.Jwt = ltoken;
     return this.validateToken(ltoken);
   }
@@ -106,9 +106,12 @@ export class SecurityService {
 
   resetAll(){
     this.token.Jwt = "";
+    localStorage.removeItem("auditToken");
     this.loginStatus.Status = false;
     this.projectDetails.Name = "";
     this.projectDetails.ProjectName = "";
+    this.user.logStatus = false;
+    this.user.username = "";
     this.projectDetails.Valid = false;
     this.specialFlag.flag = false;
   }
@@ -116,6 +119,8 @@ export class SecurityService {
   checkAuthFromLocal(spath : string, epath : string){
     if(localStorage.getItem("auditToken")==null){
       if(this.getLoginStatus()){
+        // update localstorage
+        localStorage.setItem("auditToken", this.token.Jwt);
         // do nothing
       }
       else{

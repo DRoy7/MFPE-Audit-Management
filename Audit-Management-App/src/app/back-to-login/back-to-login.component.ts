@@ -20,6 +20,7 @@ export class BackToLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.securityService.resetAll();
   }
 
 }

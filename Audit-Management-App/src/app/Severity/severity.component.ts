@@ -31,20 +31,21 @@ export class SeverityComponent implements OnInit {
     this.service.executionStatus()
     .subscribe(
         data => {
-          fetch = data;
-          console.log("Data: "+data);
-          console.log("Fetch: "+fetch);
+            fetch = data;
+            if(data.auditId==0){
+              this.router.navigate(['backToLogin']);
+            }
         }, 
-        (err)=>{console.log("Error in Getting execution status")}, 
+        (err)=>{}, 
         ()=>{
           this.auditResponse = fetch;
           this.status = this.auditResponse.projectExecutionStatus;
-          console.log(this.auditResponse.projectExecutionStatus);
         }
         );
       }
 
   ngOnInit(): void { 
+    this.securityService.checkAuthFromLocal("severity", "backToLogin");
     if(localStorage.getItem("auditToken")!=null){
       if(this.securityService.getLoginStatus() && !this.securityService.getSpecialFlag()){
         this.getExecutionStatus();
@@ -54,12 +55,10 @@ export class SeverityComponent implements OnInit {
         this.router.navigate(["checklist"]);
       }
       else{
-        this.securityService.resetAll();
         this.router.navigate(['backToLogin']);
       }
     }
     else{
-      this.securityService.resetAll();
       this.router.navigate(['backToLogin']);
     }
   }

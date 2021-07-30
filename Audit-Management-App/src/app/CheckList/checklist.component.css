@@ -42,7 +42,7 @@ section{
   }
   .box2 {
     background-color: black;
-    margin-top: 5vh;
+    margin-top: 4vh;
     margin-left: 5%;
     margin-right: 5%;
     padding: 10px;
@@ -175,4 +175,12 @@ section{
 }
 .tab1{
     text-align: center;
+}
+.error-message{
+    position: absolute;
+    margin: 0%;
+    margin-bottom: 10px;
+    text-align: center;
+    left: 600px;
+    color: black;
 }

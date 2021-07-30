@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { User } from './../Services/User';
 import { ProjectDetails } from './../Models/ProjectDetails';
 import { SecurityService } from './../Services/security.service';
@@ -14,8 +15,14 @@ export class NavHeaderComponent implements OnInit {
                                           // after logging in, the log status will be "true"
   constructor(
     private securityService : SecurityService,
+    private router : Router,
     public user : User
   ) { }
+
+  logout(){
+    this.securityService.resetAll();
+    this.router.navigate(['login']);
+  }
 
   ngOnInit(): void {
     if(this.securityService.getLoginStatus()){

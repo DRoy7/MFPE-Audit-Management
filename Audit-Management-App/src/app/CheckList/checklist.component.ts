@@ -14,7 +14,7 @@ export class ChecklistComponent implements OnInit {
   questions: Question[] = [];
   connectionStatus: any = "Not connected";
   type: string = "";
-
+  message : string = ""; 
   constructor(
     private checklistService:ChecklistService,private router:Router,
     private securityService : SecurityService
@@ -26,10 +26,16 @@ export class ChecklistComponent implements OnInit {
       // .subscribe(data => this.questions = data);
       .subscribe(
         (data)=>{
-        fetch = data;
+          fetch = data;
+          if(data.length == 0){
+            this.router.navigate(["backToLogin"]);
+          }
         }, 
         (err)=>{console.log("Error in Get Questions")}, 
-        ()=>{this.questions = fetch;}
+        ()=>{
+          this.message = "";
+          this.questions = fetch;
+        }
       );
   }
 
@@ -46,18 +52,19 @@ export class ChecklistComponent implements OnInit {
   }
 
   getResponse() : void {
-    console.log("inside checklist getResponse");
     if(this.checklistService.validated(this.questions)){
       this.checklistService.getResponse(this.questions);
       this.securityService.turnOffSpecialFlag();
+      this.message = "";
       this.router.navigate(['severity']);
     }else{
-      console.log("Not Answered");
+      this.message = "Please answer all the questions to submit!!";
     }    
   }
 
   ngOnInit(): void {
     //login comes
+    this.message = "";
     this.securityService.checkAuthFromLocal('checklist', 'backToLogin');
   }
 }

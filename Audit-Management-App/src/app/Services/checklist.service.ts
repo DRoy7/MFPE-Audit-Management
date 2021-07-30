@@ -18,9 +18,7 @@ export class ChecklistService {
 
   getQuestionsFromMS(type: string) : Observable<Question[]> {
     return this.http.post<Question[]>(this.APIUrl+'/AuditCheckListQuestions',{ 'auditType':type } );
-    // subscribe((data)=>this.responses=data);
-    // console.log(this.responses);
-    // return this.responses;
+    
   }
 
   connectioncheck() : Observable<any> {
@@ -28,20 +26,15 @@ export class ChecklistService {
   }
 
   getResponse(responses: Question[]) : void {
-    console.log("From checklist service GET Response");
-    console.log(this._responses);
     this._responses = responses;
     //this.sendResponse();
   }
   
   sendResponse() : Question[] {
-    console.log("From checklist service send Response");
-    console.log(this._responses);
     return this._responses;
   }
   
   validated(questions: Question[]) {
-    console.log("Inside checklist service question validation");
     for(let q of questions){
       if(q.response!="YES" && q.response!="NO"){
         return false;

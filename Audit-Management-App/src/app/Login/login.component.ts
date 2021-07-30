@@ -32,6 +32,8 @@ export class LoginComponent implements OnInit {
             this.securityService.setLoginStatus(true);
             this.securityService.turnOnSpecialFlag();
             this.securityService.setSecurityToken(data);
+          }else{
+            this.message = "Give Proper Username and Password!!!";
           }
       },
       err => {

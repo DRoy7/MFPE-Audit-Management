@@ -1,3 +1,4 @@
+import { User } from '../Models/User';
 import { ProjectDetails } from './../Models/ProjectDetails';
 import { SecurityService } from './../Services/security.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private securityService : SecurityService,
     private router : Router,
-    private projectDetails : ProjectDetails
+    public projectDetails : ProjectDetails,
+    public user : User
     ) { }
 
   public username : string = "";    // ngModel - takes username from form
@@ -32,8 +34,6 @@ export class LoginComponent implements OnInit {
             this.securityService.setLoginStatus(true);
             this.securityService.turnOnSpecialFlag();
             this.securityService.setSecurityToken(data);
-          }else{
-            this.message = "Give Proper Username and Password!!!";
           }
       },
       err => {
@@ -49,7 +49,9 @@ export class LoginComponent implements OnInit {
                 this.projectDetails.ProjectName = data.projectName;
                 this.projectDetails.Valid = data.valid;
               },
-              err =>{},
+              err =>{
+                
+              },
               ()=>{
                 // sets the localstorage
                 localStorage.setItem("auditToken", this.securityService.getSecurityToken());

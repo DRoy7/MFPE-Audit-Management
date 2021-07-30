@@ -1,4 +1,4 @@
-import { User } from './Services/User';
+import { User } from './Models/User';
 import { SpecialFLag } from './Models/SpecialFlag';
 import { AuthorizationMSClientService } from './HttpClients/authorization-msclient.service';
 import { NgModule } from '@angular/core';

@@ -1,4 +1,4 @@
-import { User } from './User';
+import { User } from '../Models/User';
 import { Router } from '@angular/router';
 import { SpecialFLag } from './../Models/SpecialFlag';
 import { ProjectDetailsInterface } from './../Models/ProjectDetailsInterface';
@@ -15,6 +15,7 @@ import { prepareEventListenerParameters } from '@angular/compiler/src/render3/vi
   providedIn: 'root'
 })
 export class SecurityService {
+  public message : string = "";
   constructor(
     // Models
     private token : SecurityToken,
@@ -25,7 +26,7 @@ export class SecurityService {
     public user : User,
     // services
     private authClient : AuthorizationMSClientService,
-    private router : Router,
+    private router : Router
     ) { 
     }
 
@@ -114,6 +115,7 @@ export class SecurityService {
     this.user.username = "";
     this.projectDetails.Valid = false;
     this.specialFlag.flag = false;
+    this.message = "";
   }
 
   checkAuthFromLocal(spath : string, epath : string){

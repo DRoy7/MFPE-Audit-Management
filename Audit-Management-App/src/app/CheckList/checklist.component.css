@@ -37,7 +37,7 @@ section{
     margin-right: 10vh;
     padding: 10px;
     color: #fff;
-    text-align: center;
+    /* text-align: center; */
     border-radius: 10px;
   }
   .box2 {
@@ -155,8 +155,11 @@ section{
     left:0px;
 }
 
-.bigbtn{
+.bigbtn, .lastbtn{
     width: 120px;
+}
+.bigbtn{
+    padding: 5px;
 }
 
 .largeLable{
@@ -169,4 +172,7 @@ section{
     left:870px;
     width: 270px;
     height: 5vh;
+}
+.tab1{
+    text-align: center;
 }

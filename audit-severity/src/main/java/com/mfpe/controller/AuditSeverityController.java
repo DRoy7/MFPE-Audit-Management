@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ import com.mfpe.service.AuthorizationService;
 
 @RestController
 @RequestMapping("/severity")
+@CrossOrigin(origins = "*")
 public class AuditSeverityController {
 	
 	@Autowired
@@ -70,8 +72,8 @@ public class AuditSeverityController {
 			
 			auditType.setAuditType(auditRequest.getAuditDetail().getAuditType());	// setting auditType
 			
-			// getting responses back from Checklist-MS
-			List<AuditQuestion> questionResponses = auditCheckListFeign.auditCheckListQuestions(jwt, auditType);
+			// getting responses back from RequestBody
+			List<AuditQuestion> questionResponses = auditRequest.getAuditDetail().getAuditQuestions();
 			
 			// create Audit-response
 			auditResponse = auditResponseService.getAuditResponse(benchmarkList,auditType.getAuditType(), questionResponses);

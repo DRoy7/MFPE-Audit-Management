@@ -45,17 +45,23 @@ export class SeverityComponent implements OnInit {
       }
 
   ngOnInit(): void { 
-    if(this.securityService.getLoginStatus() && !this.securityService.getSpecialFlag()){
-      this.getExecutionStatus();
-    }
-    else if(this.securityService.getLoginStatus() || !this.securityService.getSpecialFlag()){
-      this.securityService.turnOnSpecialFlag();
-      this.router.navigate(["checklist"]);
+    if(localStorage.getItem("auditToken")!=null){
+      if(this.securityService.getLoginStatus() && !this.securityService.getSpecialFlag()){
+        this.getExecutionStatus();
+      }
+      else if(this.securityService.getLoginStatus() || !this.securityService.getSpecialFlag()){
+        this.securityService.turnOnSpecialFlag();
+        this.router.navigate(["checklist"]);
+      }
+      else{
+        this.securityService.resetAll();
+        this.router.navigate(['backToLogin']);
+      }
     }
     else{
+      this.securityService.resetAll();
       this.router.navigate(['backToLogin']);
     }
   }
-
 }
 

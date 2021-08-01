@@ -1,3 +1,4 @@
+import { ServerErrorComponent } from './server-error/server-error.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChecklistComponent } from './CheckList/checklist.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path : "login", component : LoginComponent},  // login
   {path : "checklist", component : ChecklistComponent},  // checklists
   {path : "backToLogin", component : BackToLoginComponent}, // if unauthorized access happens
+  {path : "error", component : ServerErrorComponent}, // if nothing matches
   {path : "**", component : LoginComponent} // if nothing matches
 
 ];

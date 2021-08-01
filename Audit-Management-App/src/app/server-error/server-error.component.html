@@ -3,13 +3,14 @@
 <!-- Component Body -->
 <div class="body">
     <div class="base io"> 
-        <h1 class="io">403</h1>
-        <h2>Access forbidden</h2>
+        <h1 class="io">500</h1>
+        <h2>INTERNAL SERVER ERROR</h2>
         <h5>
-            We suggest you to..
-            <span class="m-4">
-                <button class="btn btn-danger" (click)="goBack()">Login</button>
-            </span>Again!!!
+            We suggest you to try again later!!!
+        </h5>
+        <h5>
+            Sorry for the 
+            inconvenience.
         </h5>
     </div>
 </div>
@@ -54,7 +55,6 @@
   animation-delay: 0.5s;
 }
 .body .base h1:before {
-  content: "U";
   position: absolute;
   top: -12%;
   right: 43.0%;

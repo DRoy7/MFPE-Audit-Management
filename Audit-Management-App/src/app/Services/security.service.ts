@@ -46,6 +46,10 @@ export class SecurityService {
     this.token.Jwt = ltoken;
     return this.validateToken(ltoken);
   }
+
+  healthCheck(){
+    return this.authClient.healthCheck();
+  }
   
   createSecuritytokenObservable(username : string, password : string){
     // take result from AuthorizationMSClient service, using the username, passord :: subscribe
@@ -142,11 +146,11 @@ export class SecurityService {
         (err)=>{},
         ()=>{
           if(this.getLoginStatus()){
-            console.log("syncing");
+            //console.log("syncing");
             this.turnOnSpecialFlag();
           }
           else{
-            console.log("resetting");
+            //console.log("resetting");
             this.resetAll();
             this.router.navigate([epath]);
           }

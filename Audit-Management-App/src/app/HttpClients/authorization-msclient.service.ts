@@ -27,4 +27,10 @@ export class AuthorizationMSClientService {
         headers: new HttpHeaders().set("Authorization", "Bearer "+securityToken)
       });
   }
+
+  healthCheck(){
+    return this.authClient.get(Microservices["auth"]+"/health-check", {
+      responseType : 'text'
+    });
+  }
 }

@@ -15,12 +15,14 @@ export class ChecklistComponent implements OnInit {
   connectionStatus: any = "Not connected";
   type: string = "";
   message : string = ""; 
+  loadFlag : boolean = false;
   constructor(
     private checklistService:ChecklistService,private router:Router,
-    private securityService : SecurityService
+    public securityService : SecurityService
     ) {}
 
   getQuestions() : void {
+    this.loadFlag = true;
     let fetch : Question[] = []; 
     this.checklistService.getQuestionsFromMS(this.type)
       // .subscribe(data => this.questions = data);
@@ -31,7 +33,7 @@ export class ChecklistComponent implements OnInit {
             this.router.navigate(["backToLogin"]);
           }
         }, 
-        (err)=>{console.log("Error in Get Questions")}, 
+        (err)=>{this.router.navigate(["error"])}, 
         ()=>{
           this.message = "";
           this.questions = fetch;
@@ -40,7 +42,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   connectionCheck() : void {
-    this.checklistService.connectioncheck().subscribe(data=>this.connectionStatus=data);
+    this.checklistService.healthCheck().subscribe(data=>this.connectionStatus=data);
   }
 
   responseYes(i:number):void {
@@ -65,6 +67,25 @@ export class ChecklistComponent implements OnInit {
   ngOnInit(): void {
     //login comes
     this.message = "";
-    this.securityService.checkAuthFromLocal('checklist', 'backToLogin');
+    this.loadFlag = false;
+    this.securityService.healthCheck().subscribe(
+      (data)=>{
+      },
+      (err)=>{
+        this.router.navigate(['error']);
+      },
+      ()=>{
+        this.checklistService.healthCheck().subscribe(
+          (data)=>{
+          },
+          (err)=>{
+            this.router.navigate(['error']);
+          },
+          ()=>{
+            this.securityService.checkAuthFromLocal('checklist', 'backToLogin');
+          }
+        );
+      }
+    );
   }
 }

@@ -22,6 +22,7 @@ import { BackToLoginComponent } from './back-to-login/back-to-login.component';
 import { LoginStatus } from './Models/LoginStatus';
 import { ProjectDetails } from './Models/ProjectDetails';
 import { TokenInterceptorService } from './Services/token-interceptor.service';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { TokenInterceptorService } from './Services/token-interceptor.service';
     ChecklistComponent,
     SeverityComponent,
     NavHeaderComponent,
-    BackToLoginComponent
+    BackToLoginComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule,

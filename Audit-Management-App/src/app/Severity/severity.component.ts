@@ -1,3 +1,4 @@
+import { ChecklistService } from './../CheckList/checklist.service';
 import { Router } from '@angular/router';
 import { SecurityService } from './../Services/security.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +11,7 @@ import { AuditResponse } from '../Models/AuditResponse';
   styleUrls: ['./severity.component.css']
 })
 export class SeverityComponent implements OnInit {
-  status:string="black";
+  status:string="";
   auditResponse:AuditResponse = {
     auditId: 0,
     managerName: "",
@@ -22,7 +23,8 @@ export class SeverityComponent implements OnInit {
   constructor(
     private service:SeverityService,
     private router : Router,
-    private securityService : SecurityService
+    private securityService : SecurityService,
+    private checklistService : ChecklistService
     ) {  }
   
     
@@ -32,7 +34,7 @@ export class SeverityComponent implements OnInit {
     .subscribe(
         data => {
             fetch = data;
-            console.log(data);
+            //console.log(data);
             if(data.auditId==0){  //valid check
               this.router.navigate(['backToLogin']);
             }
@@ -46,22 +48,48 @@ export class SeverityComponent implements OnInit {
       }
 
   ngOnInit(): void { 
-    this.securityService.checkAuthFromLocal("severity", "backToLogin");
-    if(localStorage.getItem("auditToken")!=null){
-      if(this.securityService.getLoginStatus() && !this.securityService.getSpecialFlag()){
-        this.getExecutionStatus();
-      }
-      else if(this.securityService.getLoginStatus() || !this.securityService.getSpecialFlag()){
-        this.securityService.turnOnSpecialFlag();
-        this.router.navigate(["checklist"]);
-      }
-      else{
-        this.router.navigate(['backToLogin']);
-      }
-    }
-    else{
-      this.router.navigate(['backToLogin']);
+    this.status = "";
+    this.securityService.healthCheck().subscribe(
+      (data)=>{
+      },
+      (err)=>{
+        this.router.navigate(['error']);
+      },
+      ()=>{
+        this.service.benchHealthCheck().subscribe(
+          (data)=>{
+          },
+          (err)=>{
+            this.router.navigate(['error']);
+          },
+          ()=>{
+            this.service.auditHealthCheck().subscribe(
+              (data)=>{
+              },
+              (err)=>{
+                this.router.navigate(['error']);
+              },
+              ()=>{
+                  this.securityService.checkAuthFromLocal("severity", "backToLogin");
+                  if(localStorage.getItem("auditToken")!=null){
+                    if(this.securityService.getLoginStatus() && !this.securityService.getSpecialFlag()){
+                      this.getExecutionStatus();
+                    }
+                    else if(this.securityService.getLoginStatus() || !this.securityService.getSpecialFlag()){
+                      this.securityService.turnOnSpecialFlag();
+                      this.router.navigate(["checklist"]);
+                    }
+                    else{
+                      this.router.navigate(['backToLogin']);
+                    }
+                  }
+                  else{
+                    this.router.navigate(['backToLogin']);
+                  }
+              });
+          });
+      });
     }
   }
-}
 
+  

@@ -21,7 +21,7 @@ export class ChecklistService {
     
   }
 
-  connectioncheck() : Observable<any> {
+  healthCheck() : Observable<any> {
     return this.http.get<any>(this.APIUrl+'/health-check',{responseType:'text' as 'json'});
   }
 

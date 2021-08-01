@@ -67,8 +67,19 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = "";
-    //init jtwtoken in not localstorage
-    this.securityService.checkAuthFromLocal('login', 'login');
+    //health-check
+    this.securityService.healthCheck().subscribe(
+      (data)=>{
+      },
+      (err)=>{
+        this.securityService.resetAll();
+        this.router.navigate(['error']);
+      },
+      ()=>{
+        //init jtwtoken in not localstorage
+        this.securityService.checkAuthFromLocal('login', 'login');
+      }
+    );
   }
 
 }

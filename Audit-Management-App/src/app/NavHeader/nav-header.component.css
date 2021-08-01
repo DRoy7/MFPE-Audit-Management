@@ -58,3 +58,19 @@ h6{
     top: 5px;
     right:52vh;
 }
+#navbarNav{
+    background-color: #191919;
+    color: white;
+    position: absolute;
+    padding-top: 1vh;
+    left: 2vw;
+    z-index:2;
+    border-left: 1px solid;
+    border-color: white;
+    padding-left: 15px;
+}
+
+.nav-item :hover{
+    background-color: rgb(141, 219, 250);
+    color: #191919;
+}

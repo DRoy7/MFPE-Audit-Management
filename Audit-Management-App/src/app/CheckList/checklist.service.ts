@@ -18,8 +18,8 @@ export class ChecklistService {
     return this.http.post<Question[]>(this.APIUrl+'/AuditCheckListQuestions',{ 'auditType':type } );
   }
 
-  connectioncheck() : Observable<any> {
-    return this.http.get<any>(this.APIUrl+'/health-check',{responseType:'text' as 'json'});
+  healthCheck() {
+    return this.http.get(this.APIUrl+'/health-check',{responseType:'text'});
   }
 
   getResponse(responses: Question[]) : void {

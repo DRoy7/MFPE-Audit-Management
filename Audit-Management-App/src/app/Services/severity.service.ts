@@ -25,6 +25,10 @@ export class SeverityService {
     return this.http.get(Microservices["severity"]+"/health-check",{ responseType : 'text'});
   }
 
+  public benchHealthCheck(){
+    return this.http.get(Microservices["benchmark"]+"/health-check",{ responseType : 'text'});
+  }
+
   public getResponses() : Question[]{
     return this.checklistService.sendResponse();
   }

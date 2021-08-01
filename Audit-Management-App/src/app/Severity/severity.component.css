@@ -30,3 +30,9 @@ td, th{
 .tsev{
     font-weight: 500;
 }
+
+.dotdots{
+    position: absolute;
+    top:15vh;
+    left:37vw;
+}

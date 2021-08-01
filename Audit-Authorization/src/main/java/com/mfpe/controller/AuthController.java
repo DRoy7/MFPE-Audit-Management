@@ -1,5 +1,7 @@
 package com.mfpe.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class AuthController {
 	
 	// authentication - for the very first login
 	@PostMapping("/authenticate")
-	public ResponseEntity<String> generateJwt(@RequestBody AuthenticationRequest request){
+	public ResponseEntity<String> generateJwt(@Valid @RequestBody AuthenticationRequest request){
 		ResponseEntity<String> response = null;
 		
 		// authenticating the User-Credentials
@@ -86,7 +88,6 @@ public class AuthController {
 		
 		
 		// check the jwt is proper or not
-		// getting user-name from session
 		final ProjectManagerDetails projectManagerDetails = projectManagerDetailsService
 															.loadUserByUsername(jwtService.extractUsername(jwt));
 		

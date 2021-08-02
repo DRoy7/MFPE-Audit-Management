@@ -1,9 +1,13 @@
 package com.mfpe.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
@@ -24,7 +28,15 @@ public class AuditResponse {
 	private int auditId;
 	private String managerName;
 	private String projectName;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date creationDateTime;
+	
 	private String projectExecutionStatus;
 	private String remedialActionDuration;
+	
+	public void setCreationDateTime(Date creationDateTime2) {
+		this.creationDateTime = creationDateTime2;
+	}
 	
 }

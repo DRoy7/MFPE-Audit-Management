@@ -52,9 +52,16 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>3.0.3</version>
 		</dependency>
+		<!-- validation -->
+		<dependency> 
+        	<groupId>org.hibernate</groupId>
+        	<artifactId>hibernate-validator</artifactId>
+        	<version>6.0.13.Final</version>
+    	</dependency> 
 	</dependencies>
 
 	<build>
+	<finalName>MFPE-BenchmarkMS-JAR</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

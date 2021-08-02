@@ -1,5 +1,6 @@
 package com.mfpe.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 		// setting project name and manager name
 		auditResponse.setProjectName(auditRequest.getProjectName());
 		auditResponse.setManagerName(auditRequest.getManagerName());
-		
+		auditResponse.setCreationDateTime(new Date());
 		logger.info("Saving Audit-Response in DB :: " + auditResponse);
 		
 		return auditResponseRepo.save(auditResponse);

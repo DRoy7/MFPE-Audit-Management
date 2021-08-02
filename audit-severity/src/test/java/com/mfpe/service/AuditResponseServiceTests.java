@@ -1,7 +1,8 @@
 package com.mfpe.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ class AuditResponseServiceTests {
 	@InjectMocks
 	AuditResponseServiceImpl auditResponseServiceImpl;
 	
-	AuditResponse auditResponse = new AuditResponse(1,"ManagerName","ProjectName","ProjectExecutionStatus","RemedialActionDuration");
+	AuditResponse auditResponse = new AuditResponse(1,"ManagerName","ProjectName", new Date(), "ProjectExecutionStatus","RemedialActionDuration");
 	List<AuditQuestion> questions = new ArrayList<>();	
 	Date date = new Date();
 	List<AuditQuestion> questionResponseList = new ArrayList<>();	
@@ -55,7 +56,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(3,"Are all artifacts like CR document, Unit test cases available?","Internal","NO"));
 		questions.add(new AuditQuestion(4,"Is the SIT and UAT sign-off available?","Internal","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","Internal","NO"));
-		auditResponse = new AuditResponse(0,null,null,"GREEN","No action needed");
+		auditResponse = new AuditResponse(0,null,null,null,"GREEN","No action needed");
 	
 		assertEquals(auditResponse,auditResponseServiceImpl.getAuditResponse(benchmarkList,"Internal", questions));
 	}
@@ -73,7 +74,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(3,"Are all artifacts like CR document, Unit test cases available?","Internal","NO"));
 		questions.add(new AuditQuestion(4,"Is the SIT and UAT sign-off available?","Internal","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","Internal","NO"));
-		auditResponse = new AuditResponse(0,null,null,"RED","Action to be taken in 2 weeks");
+		auditResponse = new AuditResponse(0,null,null,null,"RED","Action to be taken in 2 weeks");
 	
 		assertEquals(auditResponse,auditResponseServiceImpl.getAuditResponse(benchmarkList,"Internal", questions));
 	}
@@ -91,7 +92,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(3,"For a major change, was there a database backup taken before and after PROD move?","SOX","YES"));
 		questions.add(new AuditQuestion(4,"Has the application owner approval obtained while adding a user to the system?","SOX","YES"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","SOX","YES"));
-		auditResponse = new AuditResponse(0,null,null,"GREEN","No action needed");
+		auditResponse = new AuditResponse(0,null,null,null,"GREEN","No action needed");
 	
 		assertEquals(auditResponse,auditResponseServiceImpl.getAuditResponse(benchmarkList,"SOX", questions));
 	}
@@ -109,7 +110,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(3,"For a major change, was there a database backup taken before and after PROD move?","SOX","YES"));
 		questions.add(new AuditQuestion(4,"Has the application owner approval obtained while adding a user to the system?","SOX","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","SOX","NO"));
-		auditResponse = new AuditResponse(0,null,null,"RED","Action to be taken in 1 week");
+		auditResponse = new AuditResponse(0,null,null,null,"RED","Action to be taken in 1 week");
 	
 		assertEquals(auditResponse,auditResponseServiceImpl.getAuditResponse(benchmarkList,"SOX", questions));
 	}
@@ -141,7 +142,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(4,"Is the SIT and UAT sign-off available?","Internal","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","Internal","NO"));
 		
-		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,"GREEN","No action needed");
+		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,null,"GREEN","No action needed");
 		assertEquals(internalGreenAuditResponse,auditResponseServiceImpl.createAuditResponse(3, questions));
 		
 	}
@@ -154,7 +155,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(4,"Is the SIT and UAT sign-off available?","Internal","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","Internal","NO"));
 		
-		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,"GREEN","No action needed");
+		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,null,"GREEN","No action needed");
 		assertEquals(internalGreenAuditResponse,auditResponseServiceImpl.createAuditResponse(4, questions));
 		
 	}
@@ -167,7 +168,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(4,"Is the SIT and UAT sign-off available?","Internal","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","Internal","NO"));
 		
-		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,"RED","Action to be taken in 2 weeks");
+		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,null,"RED","Action to be taken in 2 weeks");
 		assertEquals(internalGreenAuditResponse,auditResponseServiceImpl.createAuditResponse(3, questions));
 		
 	}
@@ -180,7 +181,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(4,"Has the application owner approval obtained while adding a user to the system?","SOX","YES"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","SOX","NO"));
 		
-		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,"GREEN","No action needed");
+		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,null,"GREEN","No action needed");
 		assertEquals(internalGreenAuditResponse,auditResponseServiceImpl.createAuditResponse(1, questions));
 		
 	}
@@ -193,7 +194,7 @@ class AuditResponseServiceTests {
 		questions.add(new AuditQuestion(4,"Has the application owner approval obtained while adding a user to the system?","SOX","NO"));
 		questions.add(new AuditQuestion(5,"Is data deletion from the system done with application owner approval?","SOX","NO"));
 		
-		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,"RED","Action to be taken in 1 week");
+		AuditResponse internalGreenAuditResponse = new AuditResponse(0,null,null,null,"RED","Action to be taken in 1 week");
 		assertEquals(internalGreenAuditResponse,auditResponseServiceImpl.createAuditResponse(1, questions));
 		
 	}

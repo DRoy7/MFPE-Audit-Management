@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.mfpe.model.AuditBenchmark;
 
-@FeignClient(value = "auditbenchmark", url = "localhost:8250/benchmark")
+@FeignClient(value = "auditbenchmark", url = "${ms.benchmark}")
 public interface AuditBenchmarkFeign {
 	
 	@GetMapping("/AuditBenchmark")

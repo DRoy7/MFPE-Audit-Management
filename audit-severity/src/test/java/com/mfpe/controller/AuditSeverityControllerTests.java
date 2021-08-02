@@ -1,7 +1,7 @@
 package com.mfpe.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,13 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mfpe.feign.AuditBenchmarkFeign;
 import com.mfpe.model.AuditBenchmark;
@@ -27,7 +25,6 @@ import com.mfpe.service.AuditResponseService;
 import com.mfpe.service.AuthorizationService;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 class AuditSeverityControllerTests {
 	
 	@Mock
@@ -61,7 +58,7 @@ class AuditSeverityControllerTests {
 		
 		AuditRequest auditRequest = new AuditRequest("ProjectName","ManagerName",new AuditDetail("Internal",date,questionResponseList));
 		
-		AuditResponse auditResponse = new AuditResponse(1,"ManagerName","ProjectName","ProjectExecutionStatus","RemedialActionDuration");
+		AuditResponse auditResponse = new AuditResponse(1,"ManagerName","ProjectName", new Date(),"ProjectExecutionStatus","RemedialActionDuration");
 		
 		when(authorizationService.validateJwt("jwt")).thenReturn(true);
 		

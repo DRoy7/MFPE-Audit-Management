@@ -26,42 +26,53 @@ export class LoginComponent implements OnInit {
   onLogIn(){
     // get the username and password, validate it, send it to SecurityService
     // delegate this info to SecurityService
-    this.securityService.createSecuritytokenObservable(this.username, this.password).subscribe(
-      data => {
-          //checks
-          if(data.includes(".")){
-            this.message = "";
-            this.securityService.setLoginStatus(true);
-            this.securityService.turnOnSpecialFlag();
-            this.securityService.setSecurityToken(data);
-          }
+    this.securityService.healthCheck().subscribe(
+      (data)=>{
       },
-      err => {
-          this.message = "Give Proper Username and Password!!!";
+      (err)=>{
+        this.securityService.resetAll();
+        this.router.navigate(['error']);
       },
-      () => {
-        // routes based on authenticationStatus
-          if(this.securityService.getLoginStatus()){
-            this.securityService.validateToken(this.securityService.getSecurityToken()).subscribe(
-              (data) => {
-                //checks
-                this.projectDetails.Name = data.name;
-                this.projectDetails.ProjectName = data.projectName;
-                this.projectDetails.Valid = data.valid;
-              },
-              err =>{
-
-              },
-              ()=>{
-                // sets the localstorage
-                localStorage.setItem("auditToken", this.securityService.getSecurityToken());
-                // routes to checklist
-                this.router.navigate(['checklist']);            
+      ()=>{
+        this.securityService.createSecuritytokenObservable(this.username, this.password).subscribe(
+          data => {
+              //checks
+              if(data.includes(".")){
+                this.message = "";
+                this.securityService.setLoginStatus(true);
+                this.securityService.turnOnSpecialFlag();
+                this.securityService.setSecurityToken(data);
               }
-            );
+          },
+          err => {
+              this.message = "Give Proper Username and Password!!!";
+          },
+          () => {
+            // routes based on authenticationStatus
+              if(this.securityService.getLoginStatus()){
+                this.securityService.validateToken(this.securityService.getSecurityToken()).subscribe(
+                  (data) => {
+                    //checks
+                    this.projectDetails.Name = data.name;
+                    this.projectDetails.ProjectName = data.projectName;
+                    this.projectDetails.Valid = data.valid;
+                  },
+                  err =>{
+    
+                  },
+                  ()=>{
+                    // sets the localstorage
+                    localStorage.setItem("auditToken", this.securityService.getSecurityToken());
+                    // routes to checklist
+                    this.router.navigate(['checklist']);            
+                  }
+                );
+              }
           }
+        );
       }
     );
+    
   }
 
 

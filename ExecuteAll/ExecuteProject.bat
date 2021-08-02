@@ -4,3 +4,4 @@ start RunAuthMS.bat
 start RunBenchMS.bat
 start RunCheckMS.bat
 start RunSeverityMS.bat
+start RunWebApp.bat

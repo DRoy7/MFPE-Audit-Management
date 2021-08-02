@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mfpe.feign.AuditBenchmarkFeign;
-import com.mfpe.feign.AuditCheckListFeign;
 import com.mfpe.model.AuditBenchmark;
 import com.mfpe.model.AuditRequest;
 import com.mfpe.model.AuditResponse;
@@ -35,9 +34,6 @@ public class AuditSeverityController {
 	private AuditBenchmarkFeign auditBenchmarkFeign;
 	
 	@Autowired
-	private AuditCheckListFeign auditCheckListFeign;
-	
-	@Autowired
 	private AuditResponseService auditResponseService;
 	
 	@Autowired
@@ -47,8 +43,8 @@ public class AuditSeverityController {
 
 	//This is to check the microservice is working or not 
 	@GetMapping("/health-check")
-	public ResponseEntity<String> healthCheck() {
-		return new ResponseEntity<>("Audit Severity Microservice is Active", HttpStatus.OK);
+	public String healthCheck() {
+		return "Audit Severity Microservice is Active";
 	}
 	
 	//This is to check the severity of the audit and it returns the execution status of the project

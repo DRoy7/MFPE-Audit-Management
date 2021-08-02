@@ -18,5 +18,4 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		return authenticationResponse.isValid();
 	}
 	
-	
 }

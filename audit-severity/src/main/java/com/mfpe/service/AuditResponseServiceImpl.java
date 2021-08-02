@@ -22,7 +22,7 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 	Logger logger = LoggerFactory.getLogger("Severity-Response-Calculation");
 	
 	//This method is to check the audit responses with the audit type
-	private AuditResponse createAuditResponse(int acceptableNo,List<AuditQuestion> questions) {
+	public AuditResponse createAuditResponse(int acceptableNo,List<AuditQuestion> questions) {
 		
 		String auditType = questions.get(0).getAuditType();
 		int actualNo = countNos(questions);
@@ -34,22 +34,18 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 		*  Determines the project execution status and the remediation duration detail
 		*/
 		if(actualNo <= acceptableNo && auditType.equalsIgnoreCase("Internal")) {
-			auditResponse.setAuditId((int) Math.random());
 			auditResponse.setProjectExecutionStatus("GREEN");
 			auditResponse.setRemedialActionDuration("No action needed");
 		}
 		else if(actualNo > acceptableNo && auditType.equalsIgnoreCase("Internal")) {
-			auditResponse.setAuditId((int) Math.random());
 			auditResponse.setProjectExecutionStatus("RED");
 			auditResponse.setRemedialActionDuration("Action to be taken in 2 weeks");
 		}
 		else if(actualNo <= acceptableNo && auditType.equalsIgnoreCase("SOX")) {
-			auditResponse.setAuditId((int) Math.random());
 			auditResponse.setProjectExecutionStatus("GREEN");
 			auditResponse.setRemedialActionDuration("No action needed");
 		}
 		else{
-			auditResponse.setAuditId((int) Math.random());
 			auditResponse.setProjectExecutionStatus("RED");
 			auditResponse.setRemedialActionDuration("Action to be taken in 1 week");
 		}
@@ -58,7 +54,7 @@ public class AuditResponseServiceImpl implements AuditResponseService{
 	}
 	
 	//This  method is to count the number of No's
-	private int countNos(List<AuditQuestion> questions) {
+	public int countNos(List<AuditQuestion> questions) {
 		
 		int count = 0;
 		for(AuditQuestion q:questions) {

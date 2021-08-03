@@ -24,7 +24,7 @@
 
 ## Module Name::
 
-* ### Authorization-Microservice :
+* ### Audit-Authorization-Microservice :
   This module is used for doing the **Authentication** and **Authorization** part of our project. 
   This microsevice provides the endpoints for authentication and validation. This MS creates JWTs(JSON Web Token)
   for a authenticated user who is in Database and then it validates the user based on the JWT token passed in the

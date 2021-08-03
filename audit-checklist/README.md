@@ -40,7 +40,7 @@
             <tr>
                 <td>GET</td>
                 <td>/AuditChecklist</td>
-                <td>Displays list of Questions</td>
+                <td>Displays the list of Questions</td>
             </tr>
         </tbody>
     </table>

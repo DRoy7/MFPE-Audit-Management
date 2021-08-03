@@ -26,7 +26,7 @@
 
 * ### Audit-Benchmark-Microservice :
   This module is used for storing and retrieving the **Number of acceptable NOs** for each **Audit Type** from the H2 in-memory database.
-  This microsevice is used by the Audit-Severity Microservice to evaluate the status of a project and provide an appropriate response.
+  This microsevice is used by the Audit-Severity Microservice to evaluate the status of a project and provide an appropriate response to the client.
 
   * #### --Endpoints : 
     <table>

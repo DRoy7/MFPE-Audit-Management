@@ -44,7 +44,7 @@
         </tbody>
     </table>
 
-  * #### --Dependencies on Other microsevices : **None**
+  * #### --Dependencies on Other microsevices : **Audit-Authorization Microservice**
 
   * #### --Application Properties Toggle :<br/>
       spring.application.name=AuditBenchmark<br/>

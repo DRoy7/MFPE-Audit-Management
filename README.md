@@ -34,5 +34,9 @@
   * #### 1> USING CMD OR TERMINAL<br/>
     * ##### 1.1> Open CMD or any terminal and go to the "ExecuteAll" folder<br/>
     * ##### 1.2> run the "ExecuteProject" batch file<br/>
+    * ##### 1.3> In the Angular terminal or Audit-Management-App terminal write 'D' and then 'A'<br/>
+
   * #### 2> Just go to the "ExecuteAll" folder and open the "ExecuteProject" batch file<br/>
+    * ##### 2.1> In the Angular terminal or Audit-Management-App terminal write 'D' and then 'A'<br/>
+
 

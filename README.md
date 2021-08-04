@@ -39,4 +39,20 @@
   * #### 2> Just go to the "ExecuteAll" folder and open the "ExecuteProject" batch file<br/>
     * ##### 2.1> In the Angular terminal or Audit-Management-App terminal write 'D' and then 'A'<br/>
 
+* ### User Flow of the Audit Management App : 
+    * #### 1> Audit management Portal allows a member to Login. 
+    * #### 2> Once successfully logged in, the member do the following operations: 
+    * #### 3> Choose the audit type to view the list of audit checklist questions
+    * #### 4> Let the project manager provide answers to the questions 
+    * #### 5> Invoke the Audit Severity Microservice to determine the project execution status
+    * #### 6> Display the result on the Web UI 
+    * #### 7> The audit response detail along with the project execution status and remedial action duration should be saved to the database
+    
+* ### Internal connectivity of the Audit Management App and the Microservices : 
+    ![Internal Connectivity of the App](additionalAssets/flow.png)
 
+* ### Screenshots : 
+    ![Login Screen](additionalAssets/login.png)
+    ![Login Screen](additionalAssets/checklist.png)
+    ![Login Screen](additionalAssets/status.png)
+    

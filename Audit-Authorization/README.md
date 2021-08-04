@@ -64,4 +64,5 @@
       server.servlet.context-path=/auth<br/>
       User Database : H2(In-Memory)<br/>
       Data about authenticated users provided in : data.sql
+      JWT token duration = 5mins(given)...You can change the properties from the application.properties file
 

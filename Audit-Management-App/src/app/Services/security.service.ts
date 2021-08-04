@@ -141,6 +141,9 @@ export class SecurityService {
           fetch = data;
           if(data.valid){
             this.syncAll(data.name, data.projectName) // can access everypage except Severity
+          }else{
+            this.resetAll();
+            this.router.navigate([epath]);
           }
         },
         (err)=>{},

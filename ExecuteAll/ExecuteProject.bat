@@ -1,7 +1,7 @@
 echo "Running Audit-Management-System\n"
 cd Exec
-start RunAuthMS.bat
-start RunBenchMS.bat
-start RunCheckMS.bat
-start RunSeverityMS.bat
+start /min RunAuthMS.bat
+start /min RunBenchMS.bat
+start /min RunCheckMS.bat
+start /min RunSeverityMS.bat
 start RunWebApp.bat
